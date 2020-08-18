@@ -1,9 +1,8 @@
 import React from "react";
 
-import Accordion from "./components/Accordion";
 import Search from './components/Search';
 
-const items = [
+/* const items = [
   {
     title: "Excepteur sint occaecat",
     content:
@@ -19,7 +18,7 @@ const items = [
     content:
       "Lacus luctus accumsan tortor posuere ac ut consequat semper. Suscipit adipiscing bibendum est ultricies integer quis auctor. Nunc sed velit dignissim sodales ut. Vestibulum morbi blandit cursus risus at ultrices mi. Netus et malesuada fames ac turpis egestas integer.",
   },
-];
+]; */
 
 export default () => {
   return (
