@@ -19,18 +19,24 @@ const Search = () => {
       setResults(data.query.search);
     };
 
-    // wait 500ms before executing search
-    let timeoutID = setTimeout(() => { 
-      // do not search if input is empty
-      if (term) {
-        search();
-      }
-    }, 500);
-    
-    // CLEANUP: clear current timer
-    return () => {
-      clearTimeout(timeoutID);
-    };
+    // run search immediately if this is initial page load
+    if (term && !results.length) {
+      search();
+    // else throttle search requests with timer  
+    } else {
+      // wait 500ms before executing search
+      let timeoutID = setTimeout(() => {
+        // do not search if input is empty
+        if (term) {
+          search();
+        }
+      }, 500);
+
+      // CLEANUP: clear current timer
+      return () => {
+        clearTimeout(timeoutID);
+      };
+    }
   }, [term]);
 
   const searchResultsMapped = results.map((result) => {
