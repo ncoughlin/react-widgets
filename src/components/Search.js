@@ -19,11 +19,18 @@ const Search = () => {
       setResults(data.query.search);
     };
 
-    // do not search if input is empty
-    if (term) {
-      search();
-    } 
+    // wait 500ms before executing search
+    let timeoutID = setTimeout(() => { 
+      // do not search if input is empty
+      if (term) {
+        search();
+      }
+    }, 500);
     
+    // CLEANUP: clear current timer
+    return () => {
+      clearTimeout(timeoutID);
+    };
   }, [term]);
 
   const searchResultsMapped = results.map((result) => {
