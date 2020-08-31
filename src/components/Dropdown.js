@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Dropdown = ({ dropdownOptions, selected, onSelectedChange }) => {
   // state to manage toggle visibility
   const [open, setOpen] = useState(false);
+  // set ref variable
+  const ref = useRef();
+
+  // on initial render, add click event listener
+  useEffect(() => {
+    document.body.addEventListener("click", (event) => {
+      // check if element that was clicked is inside of ref'd component
+      // if so no action is required from this event listener so exit
+      if (ref.current.contains(event.target)) {
+        return;
+      }
+      // else close the dropdown
+      setOpen(false);
+    });
+  }, []);
 
   const renderedOptions = dropdownOptions.map((option) => {
     // if current selection is equal to option do not generate div
@@ -23,7 +38,7 @@ const Dropdown = ({ dropdownOptions, selected, onSelectedChange }) => {
   });
 
   return (
-    <div className="ui form">
+    <div ref={ref} className="ui form">
       <div className="field">
         <label className="label">Select a Color</label>
         <div
