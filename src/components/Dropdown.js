@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Dropdown = ({ dropdownOptions, selected, onSelectedChange }) => {
+const Dropdown = ({ options, selected, onSelectedChange }) => {
   // state to manage toggle visibility
   const [open, setOpen] = useState(false);
   // set ref variable
   const ref = useRef();
 
+  // close dropdown if clicked anywhere outside of dropdown
   // on initial render, add click event listener
   useEffect(() => {
     document.body.addEventListener("click", (event) => {
@@ -19,7 +20,8 @@ const Dropdown = ({ dropdownOptions, selected, onSelectedChange }) => {
     });
   }, []);
 
-  const renderedOptions = dropdownOptions.map((option) => {
+  // map options from props
+  const renderedOptions = options.map((option) => {
     // if current selection is equal to option do not generate div
     if (option.value === selected.value) {
       return null;
@@ -38,22 +40,24 @@ const Dropdown = ({ dropdownOptions, selected, onSelectedChange }) => {
   });
 
   return (
-    <div ref={ref} className="ui form">
-      <div className="field">
-        <label className="label">Select a Color</label>
-        <div
-          // on click set value of open to opposite of current value
-          onClick={() => setOpen(!open)}
-          className={`ui selection dropdown ${open ? "visible active" : ""}`}
-        >
-          <i className="dropdown icon"></i>
-          <div className="text">{selected.label}</div>
+    <div class="ui container">
+      <div ref={ref} className="ui form">
+        <div className="field">
+          <label className="label">Select a Color</label>
           <div
             // on click set value of open to opposite of current value
             onClick={() => setOpen(!open)}
-            className={`menu ${open ? "visible transition" : ""}`}
+            className={`ui selection dropdown ${open ? "visible active" : ""}`}
           >
-            {renderedOptions}
+            <i className="dropdown icon"></i>
+            <div className="text">{selected.label}</div>
+            <div
+              // on click set value of open to opposite of current value
+              onClick={() => setOpen(!open)}
+              className={`menu ${open ? "visible transition" : ""}`}
+            >
+              {renderedOptions}
+            </div>
           </div>
         </div>
       </div>
