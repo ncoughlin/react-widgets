@@ -30,6 +30,7 @@ export default () => {
   return (
     <div className="ui container">
       <ColorSelect />
+      <hr />
       <Translate />
     </div>
   );
