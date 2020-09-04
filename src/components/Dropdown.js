@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Dropdown = ({ options, selected, onSelectedChange }) => {
+const Dropdown = ({ label, options, selected, onSelectedChange }) => {
   // state to manage toggle visibility
   const [open, setOpen] = useState(false);
   // set ref variable
@@ -40,24 +40,22 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
   });
 
   return (
-    <div class="ui container">
-      <div ref={ref} className="ui form">
-        <div className="field">
-          <label className="label">Select a Color</label>
+    <div ref={ref} className="ui form">
+      <div className="field">
+        <label className="label">{label}</label>
+        <div
+          // on click set value of open to opposite of current value
+          onClick={() => setOpen(!open)}
+          className={`ui selection dropdown ${open ? "visible active" : ""}`}
+        >
+          <i className="dropdown icon"></i>
+          <div className="text">{selected.label}</div>
           <div
             // on click set value of open to opposite of current value
             onClick={() => setOpen(!open)}
-            className={`ui selection dropdown ${open ? "visible active" : ""}`}
+            className={`menu ${open ? "visible transition" : ""}`}
           >
-            <i className="dropdown icon"></i>
-            <div className="text">{selected.label}</div>
-            <div
-              // on click set value of open to opposite of current value
-              onClick={() => setOpen(!open)}
-              className={`menu ${open ? "visible transition" : ""}`}
-            >
-              {renderedOptions}
-            </div>
+            {renderedOptions}
           </div>
         </div>
       </div>

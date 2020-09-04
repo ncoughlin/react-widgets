@@ -23,6 +23,7 @@ const ColorSelect = () => {
   return (
     <div>
       <Dropdown
+        label="Select a Color"
         options={colorOptions}
         selected={selected}
         onSelectedChange={setSelected}

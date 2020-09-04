@@ -28,7 +28,7 @@ import Translate from './components/Translate'
 export default () => {
 
   return (
-    <div>
+    <div className="ui container">
       <ColorSelect />
       <Translate />
     </div>
