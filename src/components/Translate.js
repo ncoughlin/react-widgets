@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Dropdown from "./Dropdown";
 
-const translationOptions = [
+const languages = [
   {
     label: "Afrikaans",
     value: "af",
@@ -18,13 +18,21 @@ const translationOptions = [
 ];
 
 const Translate = () => {
-  const [language, setLanguage] = useState(translationOptions[0]);
+  const [language, setLanguage] = useState(languages[0]);
+  const [text, setText] = useState("");
 
   return (
     <div>
+      <div className="ui form">
+        <div className="field">
+          <label> Enter Text</label>
+          <input value={text} onChange={(e) => setText(e.target.value)} />
+        </div>
+      </div>
+
       <Dropdown
         label="Select a Language"
-        options={translationOptions}
+        options={languages}
         selected={language}
         onSelectedChange={setLanguage}
       />
