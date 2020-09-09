@@ -17,15 +17,15 @@ const Dropdown = ({ label, options, selected, onSelectedChange }) => {
       }
       // else close the dropdown
       setOpen(false);
-    }
+    };
 
     document.body.addEventListener("click", onBodyClick);
 
     // CLEANUP
     // remove event listener
     return () => {
-      document.body.removeEventListener('click', onBodyClick);
-    }
+      document.body.removeEventListener("click", onBodyClick);
+    };
   }, []);
 
   // map options from props
