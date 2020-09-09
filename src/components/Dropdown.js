@@ -9,7 +9,7 @@ const Dropdown = ({ label, options, selected, onSelectedChange }) => {
   // close dropdown if clicked anywhere outside of dropdown
   // on initial render, add click event listener
   useEffect(() => {
-    document.body.addEventListener("click", (event) => {
+    const onBodyClick = (event) => {
       // check if element that was clicked is inside of ref'd component
       // if so no action is required from this event listener so exit
       if (ref.current.contains(event.target)) {
@@ -17,7 +17,15 @@ const Dropdown = ({ label, options, selected, onSelectedChange }) => {
       }
       // else close the dropdown
       setOpen(false);
-    });
+    }
+
+    document.body.addEventListener("click", onBodyClick);
+
+    // CLEANUP
+    // remove event listener
+    return () => {
+      document.body.removeEventListener('click', onBodyClick);
+    }
   }, []);
 
   // map options from props

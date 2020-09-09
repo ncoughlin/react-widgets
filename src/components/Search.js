@@ -3,7 +3,18 @@ import axios from "axios";
 
 const Search = () => {
   const [term, setTerm] = useState("React");
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
+
+  // de-bouncing the search term
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 500);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term]);
 
   useEffect(() => {
     const search = async () => {
@@ -13,31 +24,18 @@ const Search = () => {
           list: "search",
           origin: "*",
           format: "json",
-          srsearch: term,
+          srsearch: debouncedTerm,
         },
       });
       setResults(data.query.search);
     };
 
-    // run search immediately if this is initial page load
-    if (term && !results.length) {
+    // do not search if no term
+    if (debouncedTerm) {
       search();
-    // else throttle search requests with timer  
-    } else {
-      // wait 500ms before executing search
-      let timeoutID = setTimeout(() => {
-        // do not search if input is empty
-        if (term) {
-          search();
-        }
-      }, 500);
-
-      // CLEANUP: clear current timer
-      return () => {
-        clearTimeout(timeoutID);
-      };
     }
-  }, [term]);
+
+  }, [debouncedTerm]);
 
   const searchResultsMapped = results.map((result) => {
     return (
@@ -47,6 +45,7 @@ const Search = () => {
             className="ui button"
             href={`https://en.wikipedia.org?curid=${result.pageid}`}
             target="_blank"
+            rel="noopener noreferrer"
           >
             Read Article
           </a>
